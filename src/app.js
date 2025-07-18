@@ -6,18 +6,10 @@ import urlRouter from "./routes/url.routes.js";
 config();
 const app = express();
 
-
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://url-trime-aashu-singhs-projects.vercel.app",
-    ],
-    credentials: true,
-  })
-);
+
+app.use(cors({ origin: '*' }));
 
 app.use("/", urlRouter);
 
