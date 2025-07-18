@@ -2,13 +2,14 @@
 
 async function connectToDb() {
   try {
-    const res = await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/urltrim");
-    console.log("Data base connected succesfully");
-    // console.log(res);
+    console.log("connecting mongodb");
     
+    const res = await mongoose.connect(process.env.MONGO_URI);
+    console.log("Data base connected succesfully");
   } catch (error) {
     console.log("Error in connecting database " + error);
-    throw new error();
+    // Correct way to re-throw the error
+    throw error; 
   }
 }
 
