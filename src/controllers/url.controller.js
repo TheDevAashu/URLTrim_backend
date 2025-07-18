@@ -48,6 +48,7 @@ const shortenUrl = async (req, res) => {
   }
 
   let [findExistingUrl] = await Url.find({ longUrl: url });
+  console.log(process.env.BACKEND_DEPLOYED_URL);
 
   if (findExistingUrl) {
     return res.status(200).json({
