@@ -1,17 +1,22 @@
  import mongoose from "mongoose";
 
+import mongoose from "mongoose";
+
 async function connectToDb() {
   try {
-    console.log("connecting mongodb");
+    // ADD THIS LINE TO SEE THE VARIABLE IN VERCEL LOGS
+    console.log("Vercel is trying to connect with this URI:", process.env.MONGO_URI);
     
     const res = await mongoose.connect(process.env.MONGO_URI);
     console.log("Data base connected succesfully");
   } catch (error) {
     console.log("Error in connecting database " + error);
-    // Correct way to re-throw the error
     throw error; 
   }
 }
+
+// ... rest of the file
+export { connectToDb };
 
 async function disconnectFromDb() {
   try {
