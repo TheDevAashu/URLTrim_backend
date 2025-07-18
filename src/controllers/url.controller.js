@@ -37,6 +37,8 @@ const generateShortId = (url, attemp) => {
 
 const shortenUrl = async (req, res) => {
   console.log(req.body);
+  console.log("shorten url");
+
   const { url } = req.body;
 
   if (!url) {
@@ -50,7 +52,7 @@ const shortenUrl = async (req, res) => {
   if (findExistingUrl) {
     return res.status(200).json({
       message: "Url already found",
-      url: "http://localhost:5000/" + findExistingUrl?.shortId,
+      url: process.env.BACKEND_DEPLOYED_URL + "/" + findExistingUrl?.shortId,
     });
   }
 
@@ -81,7 +83,7 @@ const shortenUrl = async (req, res) => {
 
   return res.status(200).json({
     message: "Url shortend success",
-    url: "http://localhost:5000/" + shortID,
+    url: process.env.BACKEND_DEPLOYED_URL + "/" + shortID,
   });
 };
 
@@ -89,12 +91,12 @@ const findLongUrl = async (req, res) => {
   console.log(req.params);
   const { id } = req.params;
   let [response] = await Url.find({ shortId: id });
-  if(!response){
-     return res.status(200).json({
+  if (!response) {
+    return res.status(200).json({
       message: "Url not found",
     });
   }
 
-   return res.redirect(302, response.longUrl);
+  return res.redirect(302, response.longUrl);
 };
 export { shortenUrl, findLongUrl };
