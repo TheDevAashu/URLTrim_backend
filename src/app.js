@@ -2,8 +2,10 @@ import { config } from "dotenv";
 import express from "express";
 import cors from "cors";
 import urlRouter from "./routes/url.routes.js";
+import { connectToDb } from "./db/connectDb.js";
 
 config();
+connectToDb();
 const app = express();
 
 app.use(express.json());
