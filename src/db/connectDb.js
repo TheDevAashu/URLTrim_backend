@@ -1,13 +1,13 @@
  import mongoose from "mongoose";
 
 import mongoose from "mongoose";
-
+const urlmongo = "mongodb+srv://asmongo:gTDZRO0EX53XxRxz@cluster0.kxkt9hd.mongodb.net/urltrim?retryWrites=true&w=majority&appName=Cluster0"
 async function connectToDb() {
   try {
     // ADD THIS LINE TO SEE THE VARIABLE IN VERCEL LOGS
-    console.log("Vercel is trying to connect with this URI:", process.env.MONGO_URI);
+    console.log("Vercel is trying to connect with this URI:", urlmongo);
     
-    const res = await mongoose.connect(process.env.MONGO_URI);
+    const res = await mongoose.connect(urlmongo);
     console.log("Data base connected succesfully");
   } catch (error) {
     console.log("Error in connecting database " + error);
