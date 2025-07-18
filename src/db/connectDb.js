@@ -14,9 +14,6 @@ async function connectToDb() {
   }
 }
 
-// ... rest of the file
-export { connectToDb };
-
 async function disconnectFromDb() {
   try {
     await mongoose.disconnect();
