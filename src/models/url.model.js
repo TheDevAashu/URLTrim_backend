@@ -11,6 +11,9 @@ const URlSchema = mongoose.Schema(
       required: true,
       unique: true
     },
+    userEmail: {
+      type: String,
+    },
   },
   {
     timestamps: true,

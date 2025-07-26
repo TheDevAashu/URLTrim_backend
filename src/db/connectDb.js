@@ -3,7 +3,7 @@
 
 async function connectToDb() {
   try {
-    console.log("Vercel is trying to connect with this URI:", process.env.MONGO_URI);
+    // console.log("Vercel is trying to connect with this URI:", process.env.MONGO_URI);
     
     const res = await mongoose.connect(process.env.MONGO_URI);
     console.log("Data base connected succesfully");

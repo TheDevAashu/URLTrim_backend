@@ -37,9 +37,10 @@ const generateShortId = (url, attemp) => {
 
 const shortenUrl = async (req, res) => {
   console.log(req.body);
-  console.log("shorten url");
+  // console.log("shorten url");
 
-  const { url } = req.body;
+  const { url, userEmail } = req.body;
+  // console.log(req.body);
 
   if (!url) {
     return res.status(400).json({
@@ -65,6 +66,7 @@ const shortenUrl = async (req, res) => {
     const newUrl = new Url({
       longUrl: url,
       shortId: shortID,
+      userEmail,
     });
 
     try {
@@ -91,6 +93,12 @@ const shortenUrl = async (req, res) => {
 const findLongUrl = async (req, res) => {
   console.log(req.params);
   const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({
+      message: "Missing id",
+    });
+  }
   let [response] = await Url.find({ shortId: id });
   if (!response) {
     return res.status(200).json({
@@ -100,4 +108,30 @@ const findLongUrl = async (req, res) => {
 
   return res.redirect(302, response.longUrl);
 };
-export { shortenUrl, findLongUrl };
+
+const getAllUrl = async (req, res) => {
+  let { userEmail } = req.body;
+  console.log(req.body);
+  
+  if (!userEmail) {
+    return res.status(400).json({
+      message: "Missing email",
+    });
+  }
+
+  try {
+    let response = await Url.find({ userEmail: userEmail });
+    // console.log(response);
+    return res.status(200).json({
+      urls: response,
+    });
+  } catch (error) {
+    console.log(error);
+
+    return res.status(200).json({
+      msg: "Internal Server error",
+      urls:[]
+    });
+  }
+};
+export { shortenUrl, findLongUrl, getAllUrl };
