@@ -112,7 +112,7 @@ const findLongUrl = async (req, res) => {
 const getAllUrl = async (req, res) => {
   let { userEmail } = req.body;
   console.log(req.body);
-  
+
   if (!userEmail) {
     return res.status(400).json({
       message: "Missing email",
@@ -130,8 +130,42 @@ const getAllUrl = async (req, res) => {
 
     return res.status(200).json({
       msg: "Internal Server error",
-      urls:[]
+      urls: [],
     });
   }
 };
-export { shortenUrl, findLongUrl, getAllUrl };
+
+const saveUrl = async (req, res) => {
+  const { userEmail, url } = req.body;
+  console.log(req.body);
+  console.log("saved");
+
+  if (!userEmail || !url) {
+    return res.status(400).json({
+      msg: "Missing payload",
+    });
+  }
+  try {
+    const data = await Url.findOneAndUpdate(
+      { longUrl: url },
+      {
+        $set: {
+          userEmail: userEmail,
+        },
+      },
+      { new: true }
+    );
+    console.log(data);
+
+    return res.status(200).json({
+      msg: "Url saved ",
+    });
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({
+      msg: "Internal server error ",
+    });
+  }
+};
+export { shortenUrl, findLongUrl, getAllUrl, saveUrl };
